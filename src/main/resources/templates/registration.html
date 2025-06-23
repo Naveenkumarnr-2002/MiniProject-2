@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Patient Registration</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <style>
+        body {
+            background: linear-gradient(to right, #e0f7fa, #ffffff);
+        }
+        .form-control:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+        }
+        .toggle-password {
+            cursor: pointer;
+        }
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff !important;
+        }
+    </style>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container">
+        <span class="navbar-brand mb-0">Apollo Hospital</span>
+    </div>
+</nav>
+
+<!-- Main Registration Section -->
+<main class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-6">
+                <h2 class="card-title text-center mb-4">Patient Registration</h2>
+                <div class="card shadow-lg">
+                    <div class="card-body">
+                        <form method="post" th:action="@{/patient/saveRegistration}" th:object="${patient}">
+                            <!-- First Name -->
+                            <div class="mb-3">
+                                <label for="firstName" class="form-label">First Name</label>
+                                <input th:field="*{patientFirstName}" type="text" class="form-control" id="firstName"
+                                       placeholder="Enter your first name" required/>
+                            </div>
+                            <!-- Last Name -->
+                            <div class="mb-3">
+                                <label for="lastName" class="form-label">Last Name</label>
+                                <input th:field="*{patientLastName}" type="text" class="form-control" id="lastName"
+                                       placeholder="Enter your last name" required/>
+                            </div>
+                            <!-- Email -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email ID</label>
+                                <input th:field="*{patientEmail}" type="email" class="form-control" id="email"
+                                       placeholder="Enter your email" required/>
+                                <p th:errors="*{patientEmail}" class="text-danger"
+                                   th:if="${#fields.hasErrors('patientEmail')}"></p>
+
+                            </div>
+                            <!-- Password -->
+                            <div class="mb-3 position-relative">
+                                <label for="password" class="form-label">Password</label>
+                                <div class="input-group">
+                                    <input th:field="*{patientPassword}" type="password" class="form-control"
+                                           id="password" placeholder="Enter your password" minlength="5" required/>
+                                    <span class="input-group-text bg-white">
+                                        <i class="fa-solid fa-eye" id="toggleIcon" onclick="togglePassword()"></i>
+                                    </span>
+                                </div>
+                                <small class="text-muted">Minimum 5 characters</small>
+                            </div>
+                            <!-- Contact -->
+                            <div class="mb-3">
+                                <label for="contact" class="form-label">Contact</label>
+                                <input th:field="*{patientContact}" type="text" class="form-control" id="contact"
+                                       maxlength="11" placeholder="Enter your contact number" required/>
+                            </div>
+                            <!-- Medical History -->
+                            <div class="mb-3">
+                                <label for="medicalHistory" class="form-label">
+                                    <i class="fa-solid fa-notes-medical me-1"></i>Medical History
+                                </label>
+                                <textarea th:field="*{medicalHistory}" class="form-control" id="medicalHistory" rows="4"
+                                          placeholder="Describe your medical history..."></textarea>
+                            </div>
+                            <!-- Submit Button -->
+                            <button type="submit" class="btn btn-primary w-100">Register</button>
+                            <!-- Login Link -->
+                            <p class="text-center mt-3">
+                                Already have an account?
+                                <a th:href="@{/login}">Login</a>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Password Toggle Script -->
+<script>
+    function togglePassword() {
+        const passwordField = document.getElementById("password");
+        const toggleIcon = document.getElementById("toggleIcon");
+        if (passwordField.type === "password") {
+            passwordField.type = "text";
+            toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
+        } else {
+            passwordField.type = "password";
+            toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
+        }
+    }
+</script>
+
+<!-- Bootstrap JS Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

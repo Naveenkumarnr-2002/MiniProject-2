@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+            crossorigin="anonymous"></script>
+    <title>Doctors Dashboard</title>
+    <style>
+        body {
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    .navbar-brand
+    {
+       font-size: 1.8rem;
+       font-weight: bold;
+       color: #fff !;
+    }
+    .date
+    {
+      color: #0d6efd;
+
+    }
+    h4
+    {
+    color: #0d6efd !important;
+    }
+    .dateName
+    {
+      justify-content: space-between;
+      align-items: center;
+    }
+    .dateName a
+    {
+      text-align: center;
+    }
+
+    </style>
+</head>
+
+<body>
+<!-- header -->
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container d-flex">
+        <span class="navbar-brand mb-0">Apollo Hospital</span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-info">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<main class="container my-4">
+    <div th:if="${error}" id="errorMessage" class="alert alert-danger" th:text="${error}"></div>
+    <div th:if="${message}" id="successMessage" class="alert alert-success" th:text="${message}"></div>
+
+
+    <div class=" dateName d-flex my-5 ">
+        <h2>Date: <span id="current_date" class="date mb-0"></span></h2>
+        <a th:href="@{/admin/adddoctors}" class="btn btn-success text-center ">Add Doctor</a>
+    </div>
+
+    <div class="card ">
+        <div class="card-body ">
+            <h4 class="card-title mb-4">Doctors</h4>
+            <div>
+                <table class="table table-bordered table-hover text-center align-middle">
+                    <thead class="table-primary">
+                    <tr>
+                        <th>Name</th>
+                        <th>Department Name</th>
+                        <th>Email Id</th>
+                        <th>Phone Number</th>
+                        <th>Actions</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each=" doc:${totaldoctors}">
+                        <td th:text="*{doc.doctorName}"></td>
+                        <td th:text="*{doc.specialization}"></td>
+                        <td th:text="*{doc.doctorEmail}"></td>
+                        <td th:text="*{doc.doctorContact}"></td>
+                        <td>
+                            <a th:href="@{/admin/doctor/{doctorId}/slots(doctorId=${doc.doctorId})}"
+                               class=" btn btn-info">Add Slots</a>
+                            <a th:href="@{/admin/updateDoctor/{id}(id=${doc.doctorId})}"
+                               class=" btn btn-warning">Edit</a>
+                            <a th:href="@{/admin/deleteDoctor/{id}(id=${doc.doctorId})}"
+                               class=" btn btn-warning">Delete</a>
+
+                        </td>
+
+
+                        <!--            <td>-->
+                        <!--              <a  class="btn btn-info btn-sm">View</a>-->
+                        <!--              <a th:href="@{'/admin/delted/'+ ${doc.doctorId}}" class="btn btn-danger btn-sm">Delete</a>-->
+                        <!--            </td>-->
+                    </tr>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+
+<script>
+    //get current data
+    const date=new Date();
+
+    //format of date
+    const dateformat={year: 'numeric', month: 'long', day: 'numeric'};
+    const format_date=date.toLocaleDateString('en-us',dateformat);
+
+    //diplay time in html
+
+    document.getElementById('current_date').innerHTML=format_date;
+</script>
+<script>
+    setTimeout(function () {
+        var alertElement = document.getElementById('errorMessage');
+        if (alertElement) {
+            var alert = bootstrap.Alert.getOrCreateInstance(alertElement);
+            alert.close();
+        }
+    }, 3000);
+</script>
+<script>
+    setTimeout(function () {
+        var alertElement = document.getElementById('successMessage');
+        if (alertElement) {
+            var alert = bootstrap.Alert.getOrCreateInstance(alertElement);
+            alert.close();
+        }
+    }, 3000);
+</script>
+
+
+</body>
+
+</html>

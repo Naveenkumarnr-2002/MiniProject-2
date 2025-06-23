@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Appointment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div><form th:action="@{/patient/save_Appointment}" th:object="${book_appointment}" method="post">
+    <input type="hidden" th:field="*{doctor.doctorId}" th:value="${doctor.doctorId}" />
+
+    <h3>Doctor: <span class="text-primary" th:text="${doctor.doctorName}"></span></h3>
+    <h4>Specialization: <span class="text-primary" th:text="${doctor.specialization}"></span></h4>
+
+    <div class="mb-3">
+        <label>Select Slot:</label>
+        <div class="d-flex flex-wrap gap-2">
+            <div th:each="slot : ${availableSlots}">
+                <form th:action="@{/patient/save_Appointment}" method="post">
+                    <input type="hidden" name="doctorId" th:value="${doctor.doctorId}" />
+                    <input type="hidden" name="date" th:value="${slot.date}" />
+                    <input type="hidden" name="time" th:value="${slot.time}" />
+                    <button type="submit"
+                            class="btn"
+                            th:classappend="${slot.booked} ? 'btn-secondary disabled' : 'btn-success'"
+                            th:text="${slot.date + ' ' + slot.time}"
+                            th:disabled="${slot.booked}">
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</form></div>
+</body>
+</html>

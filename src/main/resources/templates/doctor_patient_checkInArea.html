@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+    <style>
+        h2{
+        margin-left:20px;
+        }
+        .width
+        {
+        max-width:300px
+        }
+
+    </style>
+    <title>Checkup time</title>
+</head>
+<body>
+<!-- header -->
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container d-flex">
+        <span class="navbar-brand mb-0">Apollo Hospital</span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-info">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<form th:action="@{/doctor/saveThePatientMedicalDetails}" th:object="${appointmentPatient}" method="post">
+    <div class="card my-5">
+        <div class="card-body text-center ">
+            <h2 class="text-uppercase mb-5">Patient Name:
+                <span th:text="*{patientFirstName}" class="text-primary"> </span>
+                <span th:text="*{patientLastName}" class="text-primary"> </span>
+            </h2>
+
+            <h1>Patient Medical History</h1>
+            <!--    <input th:field="${medicalHistory}">-->
+            <div class="d-flex justify-content-center my-3">
+                <input type="hidden" th:field="*{patientId}"/>
+                <input type="hidden" th:field="*{patientFirstName}"/>
+                <input type="hidden" th:field="*{patientLastName}"/>
+                <input type="hidden" th:field="*{patientEmail}"/>
+                <input type="hidden" th:field="*{patientContact}"/>
+                <!--          <input type="hidden" th:field="*{appointmentId}" />-->
+                <input type="hidden" th:field="*{appointmentId}"/>
+
+
+                <textarea th:field="*{medicalHistory}" type="text" readonly class="form-control w-50 " rows="5"
+                          id="medicalHistory" required> </textarea>
+            </div>
+           <a th:href="@{/doctor/medicationsForm/{patientId}(patientId=${patientId})}" class="btn btn-success">Medications</a>
+        </div>
+    </div>
+</form>
+
+
+</body>
+</html>

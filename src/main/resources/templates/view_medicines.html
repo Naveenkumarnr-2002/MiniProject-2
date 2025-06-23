@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <title>Medications</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container d-flex">
+        <span class="navbar-brand mb-0">Apollo Hospital</span>
+        <form th:action="@{/logout}" method="post">
+            <button type="submit" class="btn btn-info">Logout</button>
+        </form>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h2>Your Prescribed Medicines:</h2>
+
+            <div>
+                <table class="table table-bordered table-hover text-center align-middle">
+                    <thead class="table-primary">
+                    <tr>
+
+                        <th>Medication</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="app : ${medications}">
+                        <td th:text="${app.medicationDetails != null ? app.medicationDetails : 'No Data'}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

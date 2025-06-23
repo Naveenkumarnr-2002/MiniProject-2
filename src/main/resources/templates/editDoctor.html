@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
+
+    <!--    <link rel="stylesheet" href="addDoctor.css">-->
+    <title>Add Doctor</title>
+</head>
+<body>
+<nav class="navbar navbar-dark bg-primary">
+    <div class="container d-flex">
+        <span class="navbar-brand mb-0">Apollo Hospital</span>
+        <a href="" class="btn btn-info">Logout</a>
+    </div>
+</nav>
+
+<main class="container">
+    <div class="container my-5">
+        <h2 class="text-center mb-4">Add Doctor</h2>
+        <form class="p-4 shadow rounded bg-white mx-auto mt-5" style="max-width: 500px;" th:object="${updateDoctor}"
+              th:action="@{/admin/saveTheUpdateDoctor}" method="post">
+            <div class="mb-3">
+                <label for="Name" class="form-label ">Name</label>
+                <input th:field="*{doctorName}" type="text" class="form-control" id="Name" placeholder="Doctor Name"
+                       required>
+            </div>
+            <div class="mb-3">
+                <label for="specialization" class="form-label">specialization</label>
+                <input th:field="*{specialization}" type="text" class="form-control" id="specialization"
+                       placeholder="specialization" required>
+            </div>
+            <div class="mb-3">
+                <label for="email" class="form-label">Email ID</label>
+                <input th:field="*{doctorEmail}" type="email" class="form-control" id="email"
+                       placeholder="Enter your email id" required>
+                <p th:errors="*{doctorEmail}" th:if="${#fields.hasErrors('doctorEmail')}" class="text-danger"></p>
+            </div>
+            <div class="mb-3">
+                <label for="number" class="form-label">Phone Number</label>
+                <input th:field="*{doctorContact}" type="text" class="form-control" id="number"
+                       placeholder="Enter your Phone number" required>
+            </div>
+
+            <input type="hidden" th:field="*{doctorId}"/>
+
+            <button type="submit" class="btn btn-primary w-100 mb-2">Submit</button>
+            <a th:href="@{/admin/dashboard}" class="btn btn-warning w-100">Back</a>
+
+
+        </form>
+
+    </div>
+
+</main>
+<!-- Password Toggle Script -->
+<script>
+    function togglePassword() {
+      const passwordField = document.getElementById("passwordInput");
+      const toggleIcon = document.getElementById("toggleIcon");
+
+      if (passwordField.type === "password") {
+        passwordField.type = "text";
+        toggleIcon.classList.replace("fa-eye", "fa-eye-slash");
+      } else {
+        passwordField.type = "password";
+        toggleIcon.classList.replace("fa-eye-slash", "fa-eye");
+      }
+    }
+</script>
+
+</body>
+</html>
