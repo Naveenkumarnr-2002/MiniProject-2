@@ -1,0 +1,19 @@
+# Gradle or Maven build folders
+/target/
+/build/
+
+# IntelliJ / Eclipse
+*.iml
+.idea/
+.project
+.classpath
+.settings/
+
+# OS files
+.DS_Store
+
+# Logs
+*.log
+
+# Environment variables
+.env
